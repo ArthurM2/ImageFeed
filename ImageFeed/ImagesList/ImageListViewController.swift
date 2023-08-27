@@ -7,6 +7,10 @@ class ImageListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    func configCell(for cell: ImageListCell) {
+        
+    }
 }
 
 extension ImageListViewController: UITableViewDataSource {
@@ -15,7 +19,15 @@ extension ImageListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImageListCell.reuseIdentifier, for: indexPath)
+        
+        guard let imageListCell = cell as? ImageListCell else {
+            return UITableViewCell()
+        }
+        
+        configCell(for: imageListCell)
+        return imageListCell
     }
 }
 
