@@ -51,8 +51,6 @@ extension ImageListViewController {
         let likeImage = isLiked ? UIImage(named: "NoActiveLikeButton") : UIImage(named: "ActiveLikeButton")
         cell.likeButton.setImage(likeImage, for: .normal)
     }
-    
-    
 }
 
 extension ImageListViewController: UITableViewDelegate {
@@ -70,5 +68,3 @@ extension ImageListViewController: UITableViewDelegate {
         return cellHeight
     }
 }
-
-
