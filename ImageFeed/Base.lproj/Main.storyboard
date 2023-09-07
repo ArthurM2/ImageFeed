@@ -95,12 +95,12 @@
         <!--Profile-->
         <scene sceneID="yFo-WV-DH9">
             <objects>
-                <viewController title="Profile" id="7yR-rr-YPn" sceneMemberID="viewController">
+                <viewController title="Profile" id="7yR-rr-YPn" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="63y-t2-7h7">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="pa4-0o-tGq" userLabel="Profile Image View">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="pa4-0o-tGq" userLabel="Avatar Image View">
                                 <rect key="frame" x="16" y="91" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="8Qe-Pl-PCY"/>
@@ -136,7 +136,7 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5i-KW-rk9" userLabel="Exit Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5i-KW-rk9" userLabel="Logout Button">
                                 <rect key="frame" x="370" y="104" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="44" id="84r-4D-avo"/>
@@ -159,6 +159,13 @@
                             <constraint firstItem="oGV-m3-cQ3" firstAttribute="trailing" secondItem="H5i-KW-rk9" secondAttribute="trailing" constant="16" id="ncy-E1-zgk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="avatarImageView" destination="pa4-0o-tGq" id="2aJ-hV-XFZ"/>
+                        <outlet property="descriptionLabel" destination="r9W-rb-Oey" id="ovM-B5-Th0"/>
+                        <outlet property="logoutButton" destination="H5i-KW-rk9" id="khL-XX-9oy"/>
+                        <outlet property="usernameLabel" destination="dyJ-AG-yzi" id="UfQ-J0-23L"/>
+                        <outlet property="usertagLabel" destination="GeU-OI-j2l" id="Upp-ID-0F1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dnE-XN-5rP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
