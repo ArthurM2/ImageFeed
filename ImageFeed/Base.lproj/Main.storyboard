@@ -247,7 +247,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="share_button"/>
                                 <connections>
-                                    <action selector="didTapDownloadButton" destination="nkB-5c-vNr" eventType="touchUpInside" id="Ymt-fx-BD5"/>
+                                    <action selector="didTapShareButton" destination="nkB-5c-vNr" eventType="touchUpInside" id="Ykz-wR-iGz"/>
                                 </connections>
                             </button>
                         </subviews>
