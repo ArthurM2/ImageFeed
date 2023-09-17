@@ -48,31 +48,23 @@
                                                     <color key="textColor" name="YP White"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SMj-Wl-fCL" userLabel="Gradient View">
-                                                    <rect key="frame" x="16" y="108" width="382" height="28"/>
-                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" name="YP Black"/>
                                             <constraints>
-                                                <constraint firstItem="SMj-Wl-fCL" firstAttribute="trailing" secondItem="Bba-cc-QUH" secondAttribute="trailing" id="5cc-Qg-Cca"/>
                                                 <constraint firstItem="Bba-cc-QUH" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="z2g-7w-RbS" secondAttribute="trailing" id="5rM-59-Lri"/>
                                                 <constraint firstItem="Bba-cc-QUH" firstAttribute="top" secondItem="ITA-Y6-YHz" secondAttribute="top" constant="4" id="GbY-a5-Zzu"/>
                                                 <constraint firstAttribute="bottom" secondItem="Bba-cc-QUH" secondAttribute="bottom" constant="4" id="Jaa-jI-Cmy"/>
                                                 <constraint firstItem="NJt-SM-C9p" firstAttribute="top" secondItem="Bba-cc-QUH" secondAttribute="top" id="K3M-rd-uqd"/>
                                                 <constraint firstItem="Bba-cc-QUH" firstAttribute="bottom" secondItem="z2g-7w-RbS" secondAttribute="bottom" constant="8" id="OKI-FC-Fdt"/>
-                                                <constraint firstItem="SMj-Wl-fCL" firstAttribute="leading" secondItem="Bba-cc-QUH" secondAttribute="leading" id="Rli-wM-XUY"/>
                                                 <constraint firstItem="Bba-cc-QUH" firstAttribute="leading" secondItem="ITA-Y6-YHz" secondAttribute="leading" constant="16" id="RsW-aZ-p8H"/>
                                                 <constraint firstAttribute="trailing" secondItem="Bba-cc-QUH" secondAttribute="trailing" constant="16" id="Vfw-ku-kg6"/>
                                                 <constraint firstItem="NJt-SM-C9p" firstAttribute="trailing" secondItem="Bba-cc-QUH" secondAttribute="trailing" id="WKb-N0-ioj"/>
-                                                <constraint firstItem="SMj-Wl-fCL" firstAttribute="bottom" secondItem="Bba-cc-QUH" secondAttribute="bottom" id="YnJ-aB-5gT"/>
                                                 <constraint firstItem="z2g-7w-RbS" firstAttribute="leading" secondItem="Bba-cc-QUH" secondAttribute="leading" constant="8" id="dHA-eE-yS0"/>
-                                                <constraint firstItem="z2g-7w-RbS" firstAttribute="top" secondItem="SMj-Wl-fCL" secondAttribute="top" constant="4" id="r6q-q6-Xb9"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="cellImage" destination="Bba-cc-QUH" id="N6O-yq-JMU"/>
                                             <outlet property="dateLabel" destination="z2g-7w-RbS" id="6PC-bA-5fu"/>
-                                            <outlet property="gradientView" destination="SMj-Wl-fCL" id="EpO-oP-l1V"/>
                                             <outlet property="likeButton" destination="NJt-SM-C9p" id="TTS-et-DcK"/>
                                         </connections>
                                     </tableViewCell>
