@@ -83,20 +83,25 @@ final class ProfileViewController: UIViewController {
         var constraints = [NSLayoutConstraint]()
         
         // add
+        // imageview constraints
         constraints.append(imageView.widthAnchor.constraint(equalToConstant: 70))
         constraints.append(imageView.heightAnchor.constraint(equalToConstant: 70))
         constraints.append(imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32))
         constraints.append(imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16))
         
+        // name label constraints
         constraints.append(nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8))
         constraints.append(nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor))
         
+        // username label constraints
         constraints.append(usernameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8))
         constraints.append(usernameLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
         
+        // description constraints
         constraints.append(userDescription.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 8))
         constraints.append(userDescription.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
         
+        // logout button constraints
         constraints.append(logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20))
         constraints.append(logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45))
         
