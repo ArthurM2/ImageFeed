@@ -3,7 +3,14 @@ import WebKit
 
 fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
 
+protocol WebViewViewControllerDelegate: AnyObject {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+}
+
 final class WebViewViewController: UIViewController {
+    
+    weak var delegate: WebViewViewControllerDelegate?
     
     // MARK: - Init
     private let backwardButton: UIButton = {
@@ -34,7 +41,7 @@ final class WebViewViewController: UIViewController {
     }
     
     @objc func backButtonPressed() {
-        dismiss(animated: true)
+        delegate?.webViewViewControllerDidCancel(self)
     }
     
     // MARK: - Setup
@@ -56,7 +63,6 @@ final class WebViewViewController: UIViewController {
         ]
         guard let url = urlComponents.url else { return }
 
-        
         let request = URLRequest(url: url)
         webView.load(request)
     }
@@ -84,7 +90,7 @@ final class WebViewViewController: UIViewController {
 }
 
 extension WebViewViewController: WKNavigationDelegate {
-    func webView(
+    private func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void

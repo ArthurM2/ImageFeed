@@ -35,6 +35,7 @@ final class AuthViewController: UIViewController {
     
     @objc func buttonPressed() {
         let vc = WebViewViewController()
+        vc.delegate = self
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -60,5 +61,15 @@ final class AuthViewController: UIViewController {
         constraints.append(authButton.heightAnchor.constraint(equalToConstant: 48))
         
         NSLayoutConstraint.activate(constraints)
+    }
+}
+
+extension AuthViewController: WebViewViewControllerDelegate {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        //TODO: proccess code
+    }
+    
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
+        dismiss(animated: true)
     }
 }
