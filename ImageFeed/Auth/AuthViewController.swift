@@ -18,9 +18,11 @@ final class AuthViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.setTitleColor(.ypBlack, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        
+        button.accessibilityIdentifier = "ShowWebView"
+            
         return button
     }()
     
@@ -31,6 +33,13 @@ final class AuthViewController: UIViewController {
         setupLayout()
     }
     
+    @objc func buttonPressed() {
+        let vc = WebViewViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    // MARK: - Setup Layout
     private func setupView() {
         view.backgroundColor = .ypBlack
         view.addSubview(imageView)
