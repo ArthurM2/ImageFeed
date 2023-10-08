@@ -43,7 +43,8 @@ final class WebViewViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadWebView()
+        webView.navigationDelegate = self
         setupInit()
     }
     
@@ -84,29 +85,13 @@ final class WebViewViewController: UIViewController {
     // MARK: - Setup
     private func setupView() {
         webView.backgroundColor = .ypWhite
-        webView.navigationDelegate = self
         
         view.addSubview(webView)
         view.addSubview(backwardButton)
         view.addSubview(progressView)
     }
-
-    private func setupWebView() {
-        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: AccessKey),
-            URLQueryItem(name: "redirect_uri", value: RedirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: AccessScope)
-        ]
-        guard let url = urlComponents.url else { return }
-
-        let request = URLRequest(url: url)
-        webView.load(request)
-    }
     
     private func setupInit() {
-        setupWebView()
         setupView()
         setupLayout()
     }
@@ -123,7 +108,7 @@ final class WebViewViewController: UIViewController {
         // progressView
         constraints.append(progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor))
         constraints.append(progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor))
-        constraints.append(progressView.topAnchor.constraint(equalTo: backwardButton.bottomAnchor))
+        constraints.append(progressView.topAnchor.constraint(equalTo: backwardButton.bottomAnchor, constant: 2))
         
         // button
         constraints.append(backwardButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 11))
@@ -134,26 +119,43 @@ final class WebViewViewController: UIViewController {
 }
 
 extension WebViewViewController: WKNavigationDelegate {
-    private func webView(
-        _ webView: WKWebView,
-        decidePolicyFor navigationAction: WKNavigationAction,
-        decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void
-    ) {
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
         if let code = code(from: navigationAction) {
-            //TODO: proccess code
-            decisionHandler(.cancel)
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+            decisionHandler(.allow)
         } else {
             decisionHandler(.allow)
         }
+        
     }
     
-    private func code(from navigationAction: WKNavigationAction) -> String? {
-        if
-            let url = navigationAction.request.url,
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" })
+    
+}
+
+private extension WebViewViewController {
+    func loadWebView() {
+        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "client_id", value: AccessKey),
+            URLQueryItem(name: "redirect_uri", value: RedirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: AccessScope)]
+        
+        if let url = urlComponents.url {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
+    }
+    
+    func code(from navigationAction: WKNavigationAction) -> String? {
+        if let url = navigationAction.request.url,
+           let urlComponents = URLComponents(string: url.absoluteString),
+           urlComponents.path == "/oauth/authorize/native",
+           let items = urlComponents.queryItems,
+           let codeItem = items.first(where: { $0.name == "code" })
         {
             return codeItem.value
         } else {
