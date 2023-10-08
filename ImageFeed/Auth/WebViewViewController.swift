@@ -130,9 +130,7 @@ extension WebViewViewController: WKNavigationDelegate {
             decisionHandler(.allow)
         }
         
-    }
-    
-    
+    }  
 }
 
 private extension WebViewViewController {

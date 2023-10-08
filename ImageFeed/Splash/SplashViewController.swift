@@ -20,21 +20,17 @@ final class SplashViewController: UIViewController {
     }
     
     private func switchToTabBarController() {
-        // Получаем экземпляр `Window` приложения
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         
-        // Cоздаём экземпляр нужного контроллера из Storyboard с помощью ранее заданного идентификатора.
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
            
-        // Установим в `rootViewController` полученный контроллер
         window.rootViewController = tabBarController
     }
 }
 
 extension SplashViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            // Проверим, что переходим на авторизацию
             if segue.identifier == ShowAuthenticationScreenSegueIdentifier {
                 guard
                     let navigationController = segue.destination as? UINavigationController,
