@@ -1,9 +1,10 @@
 import UIKit
 
 final class OAuth2Service {
-    static let shared = OAuth2Service()
+    // MARK: - Private variables
+    private var task: URLSessionTask?
+    private var lastCode: String?
     private let urlSession = URLSession.shared
-    
     private (set) var authToken: String? {
         get {
             return OAuth2TokenStorage().token
@@ -13,7 +14,21 @@ final class OAuth2Service {
         }
     }
     
+    // MARK: - Static variables
+    static let shared = OAuth2Service()
+    
     func fetchAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
+        assert(Thread.isMainThread)
+        if task != nil {
+            if lastCode != code {
+                task?.cancel()
+            } else {
+                return
+            }
+        } else {
+            if lastCode == code { return }
+        }
+        
         let request = authTokenRequest(code: code)
         let task = object(for: request) { [weak self] result in
             guard let self = self else { return }
