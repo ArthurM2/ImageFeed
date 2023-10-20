@@ -30,7 +30,7 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let bioDescription: UILabel = {
+    private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Hello, World!"
         label.textColor = .ypWhite
@@ -60,11 +60,21 @@ final class ProfileViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent;
     }
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let profile = ProfileService.shared.profile else { return }
+        
+        self.nameLabel.text = profile.name
+        self.descriptionLabel.text = profile.bio
+        self.loginNameLabel.text = profile.loginName
     }
     
     // MARK: - Visible subviews
@@ -73,7 +83,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(imageView)
         view.addSubview(nameLabel)
         view.addSubview(loginNameLabel)
-        view.addSubview(bioDescription)
+        view.addSubview(descriptionLabel)
         view.addSubview(logoutButton)
     }
     
@@ -98,8 +108,8 @@ final class ProfileViewController: UIViewController {
         constraints.append(loginNameLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
         
         // description constraints
-        constraints.append(bioDescription.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8))
-        constraints.append(bioDescription.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
+        constraints.append(descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8))
+        constraints.append(descriptionLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
         
         // logout button constraints
         constraints.append(logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20))

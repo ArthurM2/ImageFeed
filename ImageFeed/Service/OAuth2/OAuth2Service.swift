@@ -2,73 +2,63 @@ import UIKit
 
 final class OAuth2Service {
     // MARK: - Private variables
-    private var task: URLSessionTask?
+    private let builder: URLRequestBuilder
+    private let storage: OAuth2TokenStorage
+    private let urlSession: URLSession
     private var lastCode: String?
-    private let urlSession = URLSession.shared
-    private (set) var authToken: String? {
-        get {
-            return OAuth2TokenStorage().token
-        }
-        set {
-            OAuth2TokenStorage().token = newValue
-        }
+    private var currentTask: URLSessionTask?
+    
+//    // MARK: - Static variables
+//    static let shared = OAuth2Service()
+    
+    init(
+        urlSession: URLSession = .shared,
+        storage: OAuth2TokenStorage = .shared,
+        builder: URLRequestBuilder = .shared
+    ) {
+        self.urlSession = urlSession
+        self.storage = storage
+        self.builder = builder
     }
     
-    // MARK: - Static variables
-    static let shared = OAuth2Service()
-    
     func fetchAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        assert(Thread.isMainThread)
-        if task != nil {
-            if lastCode != code {
-                task?.cancel()
-            } else {
-                return
-            }
-        } else {
-            if lastCode == code { return }
+        guard code != lastCode, currentTask != nil else { return }
+        lastCode = code
+        guard let request = authTokenRequest(code: code) else {
+            assertionFailure("Invalid request")
+            completion(.failure(NetworkError.invalidRequest))
+            return
         }
         
-        let request = authTokenRequest(code: code)
-        let task = object(for: request) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
+        let session = URLSession.shared
+        currentTask = session.object(for: request) {
+            [weak self] (response: Result<OAuth2ResponseBody, Error>) in
+            
+            self?.currentTask = nil
+            switch response {
             case .success(let body):
                 let authToken = body.accessToken
-                self.authToken = authToken
+                self?.storage.token = authToken
                 completion(.success(authToken))
             case .failure(let error):
                 completion(.failure(error))
             }
         }
-        
-        task.resume()
     }
 }
 
 extension OAuth2Service {
-    private func object(for request: URLRequest, completion: @escaping (Result<OAuth2ResponseBody, Error>) -> Void) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<OAuth2ResponseBody, Error> in
-                Result {
-                    try decoder.decode(OAuth2ResponseBody.self, from: data)
-                }
-            }
-            completion(response)
-        }
-    }
-    
-    func authTokenRequest(code: String) -> URLRequest {
-        URLRequest.makeHTTPRequest(
+    // TODO: переписать на URLComponents query
+    func authTokenRequest(code: String) -> URLRequest? {
+        builder.makeHTTPRequest(
             path: "/oauth/token"
-            + "?client_id=\(AccessKey)"
-            + "&&client_secret=\(SecretKey)"
-            + "&&redirect_uri=\(RedirectURI)"
+            + "?client_id=\(Constants.accessKey)"
+            + "&&client_secret=\(Constants.secretKey)"
+            + "&&redirect_uri=\(Constants.redirectURI)"
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             httpMethod: "POST",
-            baseURL: DefaultBaseURL!
+            baseURLString: Constants.defaultBaseURL
         )
     }
 }

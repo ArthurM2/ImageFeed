@@ -1,6 +1,6 @@
 import Foundation
 
-struct ProfileResult {
+struct ProfileResult: Codable {
     let userLogin: String
     let firstName: String?
     let lastName: String?
@@ -9,7 +9,7 @@ struct ProfileResult {
     private enum CodingKeys: String, CodingKey {
         case userLogin = "username"
         case firstName = "first_name"
-        case lastNane = "last_name"
+        case lastName = "last_name"
         case bio
     }
 }
