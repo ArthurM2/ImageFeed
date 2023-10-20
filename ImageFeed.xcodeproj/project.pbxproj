@@ -22,6 +22,7 @@
 		8E9C87712AD1A21200B33E7C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9C87702AD1A21200B33E7C /* SplashViewController.swift */; };
 		8E9C87742AD32E2700B33E7C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9C87732AD32E2700B33E7C /* NetworkError.swift */; };
 		8E9C87902AE2677100B33E7C /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 8E9C878F2AE2677100B33E7C /* ProgressHUD */; };
+		8E9C87942AE28C0D00B33E7C /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9C87932AE28C0D00B33E7C /* UIBlockingProgressHUD.swift */; };
 		8E9D783C2A9BC2FF00759BAC /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D783B2A9BC2FF00759BAC /* ImageListCell.swift */; };
 		8EE204FA2A99B3BF0000C38B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE204F92A99B3BF0000C38B /* AppDelegate.swift */; };
 		8EE204FC2A99B3BF0000C38B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE204FB2A99B3BF0000C38B /* SceneDelegate.swift */; };
@@ -45,6 +46,7 @@
 		8E9C876D2AD1261600B33E7C /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 		8E9C87702AD1A21200B33E7C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8E9C87732AD32E2700B33E7C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		8E9C87932AE28C0D00B33E7C /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		8E9D783B2A9BC2FF00759BAC /* ImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
 		8EE204F62A99B3BF0000C38B /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EE204F92A99B3BF0000C38B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				8E55EB932AB6B45500FB13E4 /* UIColor+Extensions.swift */,
 				8E9C87692AD05BF000B33E7C /* URLSession+Extensions.swift */,
 				8E9C876B2AD08FD400B33E7C /* URLRequest+Extensions.swift */,
+				8E9C87932AE28C0D00B33E7C /* UIBlockingProgressHUD.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				8E9C87652ACEC9C700B33E7C /* OAuth2ResponseBody.swift in Sources */,
 				8E5158A92ABD5E2C007BA331 /* Constants.swift in Sources */,
 				8E9C87712AD1A21200B33E7C /* SplashViewController.swift in Sources */,
+				8E9C87942AE28C0D00B33E7C /* UIBlockingProgressHUD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
