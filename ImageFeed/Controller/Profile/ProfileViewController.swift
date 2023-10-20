@@ -20,7 +20,7 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let usernameLabel: UILabel = {
+    private let loginNameLabel: UILabel = {
         let label = UILabel()
         label.text = "@ekaterina_nov"
         label.textColor = .ypGray
@@ -30,7 +30,7 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private let userDescription: UILabel = {
+    private let bioDescription: UILabel = {
         let label = UILabel()
         label.text = "Hello, World!"
         label.textColor = .ypWhite
@@ -72,8 +72,8 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .ypBlack
         view.addSubview(imageView)
         view.addSubview(nameLabel)
-        view.addSubview(usernameLabel)
-        view.addSubview(userDescription)
+        view.addSubview(loginNameLabel)
+        view.addSubview(bioDescription)
         view.addSubview(logoutButton)
     }
     
@@ -94,12 +94,12 @@ final class ProfileViewController: UIViewController {
         constraints.append(nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor))
         
         // username label constraints
-        constraints.append(usernameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8))
-        constraints.append(usernameLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
+        constraints.append(loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8))
+        constraints.append(loginNameLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
         
         // description constraints
-        constraints.append(userDescription.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 8))
-        constraints.append(userDescription.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
+        constraints.append(bioDescription.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8))
+        constraints.append(bioDescription.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
         
         // logout button constraints
         constraints.append(logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20))

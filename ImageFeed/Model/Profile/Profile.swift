@@ -13,3 +13,14 @@ struct Profile {
         self.bio = bio
     }
 }
+
+extension Profile {
+    init(result profile: ProfileResult) {
+        self.init(
+            username: profile.userLogin,
+            name: "\(profile.firstName ?? "") \(profile.lastName ?? "")",
+            loginName: "@\(profile.userLogin)",
+            bio: profile.bio
+        )
+    }
+}
