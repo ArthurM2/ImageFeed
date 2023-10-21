@@ -2,8 +2,8 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     // MARK: - Private variables
-//    private let profileService = ProfileService.shared
-//    private var profile: Profile?
+    private let profileService = ProfileService.shared
+    private var profile: Profile?
     
     // MARK: - Init
     private let imageView: UIImageView = {
@@ -69,13 +69,23 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
-//        updateUserDetails(profile: profileService.profile ?? Profile.init(username: "", name: "", loginName: "", bio: ""))
     }
     
-    private func updateUserDetails(profile: Profile) {
-        nameLabel.text = profile.name
-        descriptionLabel.text = profile.bio
-        loginNameLabel.text = profile.loginName
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
+        updateUserDetails()
+    }
+    
+    private func updateUserDetails() {
+        guard let profile = ProfileService.shared.profile else {
+            assertionFailure("Profile failure, wasn't save")
+            return
+        }
+        
+        self.nameLabel.text = profile.name
+        self.descriptionLabel.text = profile.bio
+        self.loginNameLabel.text = profile.loginName
     }
     
     // MARK: - Visible subviews

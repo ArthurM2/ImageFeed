@@ -23,7 +23,7 @@ final class OAuth2Service {
     }
     
     func fetchAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard code != lastCode, currentTask != nil else { return }
+        guard code != lastCode else { return }
         lastCode = code
         guard let request = authTokenRequest(code: code) else {
             assertionFailure("Invalid request")

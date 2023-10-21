@@ -7,6 +7,7 @@ final class SplashViewController: UIViewController {
     private let authTokenStorage = OAuth2TokenStorage()
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let alertPresenter = AlertPresenter()
+    private var wasChecked: Bool = false
     
     private lazy var splashImageView: UIImageView = {
         let imageView = UIImageView()
@@ -19,12 +20,13 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         alertPresenter.delegate = self
-        checkAuthStatus()
         setupLayout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        checkAuthStatus()
     }
     
     // MARK: - Setup
@@ -41,6 +43,8 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Private methods
     private func checkAuthStatus() {
+        guard !wasChecked else { return }
+        wasChecked = true
         if authService.isAuthenticated {
             UIBlockingProgressHUD.show()
             
@@ -49,12 +53,14 @@ final class SplashViewController: UIViewController {
                 self?.switchToTabBarController()
             }
         } else {
-            showAuthController()
+            presentAuth()
         }
     }
     
-    private func showAuthController() {
-        let vc = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "AuthViewController")
+    private func presentAuth() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let vc = storyboard.instantiateViewController(identifier: "AuthViewController")
+        
         guard let authViewController = vc as? AuthViewController else { return }
         authViewController.delegate = self
         authViewController.modalPresentationStyle = .fullScreen
@@ -70,21 +76,6 @@ final class SplashViewController: UIViewController {
         window.rootViewController = tabBarController
     }
 }
-
-//extension SplashViewController {
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//            if segue.identifier == showAuthenticationScreenSegueIdentifier {
-//                guard
-//                    let navigationController = segue.destination as? UINavigationController,
-//                    let vc = navigationController.viewControllers[0] as? AuthViewController
-//                else { fatalError("Failed to prepare for \(showAuthenticationScreenSegueIdentifier)") }
-//                
-//                vc.delegate = self
-//            } else {
-//                super.prepare(for: segue, sender: sender)
-//               }
-//        }
-//}
 
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
@@ -127,16 +118,6 @@ extension SplashViewController: AuthViewControllerDelegate {
         alertPresenter.showAlert(title: "Упс! Что-то пошло не так :(", message: "Не удалось авторизоваться, \(error.localizedDescription)") {
             self.performSegue(withIdentifier: self.showAuthenticationScreenSegueIdentifier, sender: nil)
         }
-    }
-    
-    private func presentAuth() {
-        let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        let vc = storyboard.instantiateViewController(identifier: "AuthViewController")
-        
-        guard let authViewController = vc as? AuthViewController else { return }
-        authViewController.delegate = self
-        authViewController.modalPresentationStyle = .fullScreen
-        present(authViewController, animated: true)
     }
 }
 
