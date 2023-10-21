@@ -1,11 +1,15 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     // MARK: - Private variables
+    private let profileImageService = ProfileImageService()
+    private var profileImageServiceObserver: NSObjectProtocol?
     private let profileService = ProfileService.shared
     private var profile: Profile?
+    private var profileImage: ProfileImage?
     
-    // MARK: - Init
+    // MARK: - Init views
     private let imageView: UIImageView = {
         let image = UIImage(named: "avatar.png")
         let imageView = UIImageView(image: image)
@@ -69,14 +73,45 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+        
+        if let url = profileImageService.avatarURL {
+            updateAvatar(url: url)
+        }
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            self?.updateAvatar(notification: notification)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
+        
         updateUserDetails()
     }
     
+    
+    // MARK: - Private Methods
+    @objc private func updateAvatar(notification: Notification) {
+        guard isViewLoaded,
+              let userInfo = notification.userInfo,
+              let profileImageURL = userInfo["URL"] as? String,
+              let url = URL(string: profileImageURL)
+        else { return }
+        
+        updateAvatar(url: url)
+    }
+    
+    private func updateAvatar(url: URL) {
+        
+        imageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 61)
+        imageView.kf.setImage(with: url, options: [.processor(processor)])
+    }
+        
     private func updateUserDetails() {
         guard let profile = ProfileService.shared.profile else {
             assertionFailure("Profile failure, wasn't save")
@@ -88,6 +123,7 @@ final class ProfileViewController: UIViewController {
         self.loginNameLabel.text = profile.loginName
     }
     
+        
     // MARK: - Visible subviews
     private func setupViews() {
         view.backgroundColor = .ypBlack
@@ -97,7 +133,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(descriptionLabel)
         view.addSubview(logoutButton)
     }
-    
+        
     // MARK: - Constraints
     private func setupConstraints() {
         // init
@@ -109,7 +145,7 @@ final class ProfileViewController: UIViewController {
         constraints.append(imageView.heightAnchor.constraint(equalToConstant: 70))
         constraints.append(imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32))
         constraints.append(imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16))
-        
+            
         // name label constraints
         constraints.append(nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8))
         constraints.append(nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor))
@@ -121,12 +157,12 @@ final class ProfileViewController: UIViewController {
         // description constraints
         constraints.append(descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8))
         constraints.append(descriptionLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
-        
+            
         // logout button constraints
         constraints.append(logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20))
-        constraints.append(logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45))
-        
+            constraints.append(logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45))
+            
         // activate
         NSLayoutConstraint.activate(constraints)
-    }
+        }
 }

@@ -3,8 +3,8 @@ import UIKit
 final class SplashViewController: UIViewController {
     // MARK: - Private properties
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     private let authService = OAuth2Service()
-    private let authTokenStorage = OAuth2TokenStorage()
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let alertPresenter = AlertPresenter()
     private var wasChecked: Bool = false
