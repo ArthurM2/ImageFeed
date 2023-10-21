@@ -1,6 +1,10 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
+    // MARK: - Private variables
+//    private let profileService = ProfileService.shared
+//    private var profile: Profile?
+    
     // MARK: - Init
     private let imageView: UIImageView = {
         let image = UIImage(named: "avatar.png")
@@ -65,16 +69,13 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         setupConstraints()
+//        updateUserDetails(profile: profileService.profile ?? Profile.init(username: "", name: "", loginName: "", bio: ""))
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        guard let profile = ProfileService.shared.profile else { return }
-        
-        self.nameLabel.text = profile.name
-        self.descriptionLabel.text = profile.bio
-        self.loginNameLabel.text = profile.loginName
+    private func updateUserDetails(profile: Profile) {
+        nameLabel.text = profile.name
+        descriptionLabel.text = profile.bio
+        loginNameLabel.text = profile.loginName
     }
     
     // MARK: - Visible subviews

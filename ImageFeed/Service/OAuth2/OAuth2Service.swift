@@ -8,9 +8,6 @@ final class OAuth2Service {
     private var lastCode: String?
     private var currentTask: URLSessionTask?
     
-//    // MARK: - Static variables
-//    static let shared = OAuth2Service()
-    
     init(
         urlSession: URLSession = .shared,
         storage: OAuth2TokenStorage = .shared,
@@ -19,6 +16,10 @@ final class OAuth2Service {
         self.urlSession = urlSession
         self.storage = storage
         self.builder = builder
+    }
+    
+    var isAuthenticated: Bool {
+        storage.token != nil
     }
     
     func fetchAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {

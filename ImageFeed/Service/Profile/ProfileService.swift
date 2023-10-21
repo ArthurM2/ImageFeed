@@ -14,9 +14,9 @@ final class ProfileService {
         self.builder = builder
     }
     
-    func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
+    func fetchProfile(completion: @escaping (Result<Profile, Error>) -> Void) {
         currentTask?.cancel()
-        guard let request = fetchProfileRequest(token: token) else { return }
+        guard let request = fetchProfileRequest() else { return }
         
         currentTask = session.object(for: request) { 
             [weak self] (response: Result<ProfileResult, Error>) in
@@ -32,7 +32,7 @@ final class ProfileService {
         }
     }
     
-    private func fetchProfileRequest(token: String) -> URLRequest? {
+    private func fetchProfileRequest() -> URLRequest? {
         builder.makeHTTPRequest(
             path: "/me",
             httpMethod: "GET",
