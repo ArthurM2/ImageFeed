@@ -1,26 +1,32 @@
 import UIKit
 
 final class ProfileImageService {
-    private(set) var avatarURL: URL?
     private var currentTask: URLSessionTask?
-    private let urlBuilder = URLRequestBuilder.shared
+    private var session = URLSession.shared
+    private(set) var avatarURL: String?
+    private let builder: URLRequestBuilder
     
     static let shared = ProfileImageService()
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
-    func fetchProfileImageURL(userName: String, completion: @escaping (Result<String, Error>) -> Void) {
-        assert(Thread.isMainThread)
+    init(builder: URLRequestBuilder = .shared) {
+        self.builder = builder
+    }
+
+    
+    func fetchProfileImageURL(username: String, completion: @escaping (Result<String, Error>) -> Void) {
+        currentTask?.cancel()
         
-        guard let request = makeRequest(userName: userName) else { return }
-        let session = URLSession.shared
-        let task = session.object(for: request) { [weak self]
-            (result: Result<ProfileResult, Error>) in
+        guard let request = fetchProfileImage(username: username) else { return }
+
+        currentTask = session.object(for: request) {
+            [weak self] (response: Result<ProfileResult, Error>) in
+            self?.currentTask = nil            
             guard let self = self else { return }
-            
-            switch result {
+            switch response {
             case .success(let profilePhoto):
                 guard let mediumPhoto = profilePhoto.profileImage?.medium else { return }
-                self.avatarURL = URL(string: mediumPhoto)
+                self.avatarURL = mediumPhoto
                 completion(.success(mediumPhoto))
                 NotificationCenter.default.post(
                     name: ProfileImageService.didChangeNotification,
@@ -30,16 +36,12 @@ final class ProfileImageService {
             case .failure(let error):
                 completion(.failure(error))
             }
-            self.currentTask = nil
         }
-        
-        self.currentTask = task
-        task.resume()
     }
     
-    private func makeRequest(userName: String) -> URLRequest? {
-        urlBuilder.makeHTTPRequest(
-            path: "/users/\(userName)",
+    private func fetchProfileImage(username: String) -> URLRequest? {
+        builder.makeHTTPRequest(
+            path: "/users/\(username)",
             httpMethod: "GET",
             baseURLString: Constants.defaultBaseApiURLString
         )

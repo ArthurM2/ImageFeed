@@ -103,11 +103,16 @@ extension SplashViewController: AuthViewControllerDelegate {
     
     private func fetchProfile(completion: @escaping () -> Void) {
         profileService.fetchProfile { [weak self] profileResult in
+            guard let self = self else { return }
             switch profileResult {
             case .success(_):
-                self?.switchToTabBarController()
+                guard let username = self.profileService.profile?.username else { return }
+                self.profileImageService.fetchProfileImageURL(username: username) { _ in }
+                DispatchQueue.main.async {
+                    self.switchToTabBarController()
+                }
             case .failure(let error):
-                self?.showLoginAlert(error: error)
+                self.showLoginAlert(error: error)
             }
             
             completion()
