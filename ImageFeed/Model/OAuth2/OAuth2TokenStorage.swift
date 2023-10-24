@@ -1,14 +1,20 @@
 import UIKit
+import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
     static let shared = OAuth2TokenStorage()
+    private let keychain = KeychainWrapper.standard
     
     var token: String? {
         get {
-            return UserDefaults.standard.string(forKey: Constants.bearerToken)
+            return keychain.string(forKey: Constants.bearerToken)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Constants.bearerToken)
+            if let token = newValue {
+                keychain.set(token, forKey: Constants.bearerToken)
+            } else {
+                keychain.removeObject(forKey: Constants.bearerToken)
+            }
         }
     }
 }

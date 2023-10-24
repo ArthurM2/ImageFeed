@@ -118,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				8EE205042A99B3C00000C38B /* LaunchScreen.storyboard */,
+				8EE204FF2A99B3BF0000C38B /* Main.storyboard */,
 				8E5C111A2A99FD42002A5D21 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -257,7 +258,6 @@
 				8E9C878B2AE2664900B33E7C /* Service */,
 				8E55EB922AB6B42800FB13E4 /* Helpers */,
 				8E5C11182A99F944002A5D21 /* Resources */,
-				8EE204FF2A99B3BF0000C38B /* Main.storyboard */,
 				8EE205072A99B3C00000C38B /* Info.plist */,
 				8E9C879F2AE3A3D600B33E7C /* AlertPresenter.swift */,
 			);
