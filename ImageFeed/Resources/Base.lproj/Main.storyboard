@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ld6-b3-7ux">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -118,7 +118,7 @@
             <objects>
                 <viewController storyboardIdentifier="AuthViewController" title="AuthLogoScreen" modalPresentationStyle="fullScreen" id="F7i-UP-zD2" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vkE-wy-Eki">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="HKs-bc-bgk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -228,7 +228,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Y3P-c7-1wR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zZg-pO-jid">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -240,33 +240,6 @@
             </objects>
             <point key="canvasLocation" x="-97.101449275362327" y="-686.38392857142856"/>
         </scene>
-        <!--Splash View Controller-->
-        <scene sceneID="smV-Xe-f2T">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T8p-At-Eoh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="SplashViewController" id="ld6-b3-7ux" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ehs-JI-Y5a">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="auth_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="bfi-aQ-0NE">
-                                <rect key="frame" x="177" y="418" width="60" height="60"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="nyR-Fd-9ec"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                        <constraints>
-                            <constraint firstItem="bfi-aQ-0NE" firstAttribute="centerY" secondItem="ehs-JI-Y5a" secondAttribute="centerY" id="sor-gG-Sxd"/>
-                            <constraint firstItem="bfi-aQ-0NE" firstAttribute="centerX" secondItem="ehs-JI-Y5a" secondAttribute="centerX" id="xsC-81-QHi"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <segue destination="Y3P-c7-1wR" kind="presentation" identifier="ShowAuthenticationScreen" id="PWU-0L-Ox1"/>
-                    </connections>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="-1681.1594202898552" y="-118.52678571428571"/>
-        </scene>
     </scenes>
     <resources>
         <image name="0" width="200" height="132"/>
@@ -274,7 +247,6 @@
         <image name="ActiveMain" width="30" height="30"/>
         <image name="Backward" width="24" height="24"/>
         <image name="NoActiveLikeButton" width="44" height="44"/>
-        <image name="auth_screen_logo" width="60" height="60"/>
         <image name="share_button" width="50" height="50"/>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
