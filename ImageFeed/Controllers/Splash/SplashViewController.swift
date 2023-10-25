@@ -1,4 +1,5 @@
 import UIKit
+import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
     // MARK: - Private properties
@@ -6,8 +7,9 @@ final class SplashViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     private let authService = OAuth2Service()
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
-    private let alertPresenter = AlertPresenter()
     private var wasChecked: Bool = false
+    
+    private let test = KeychainWrapper.standard.removeAllKeys()
     
     private lazy var splashImageView: UIImageView = {
         let imageView = UIImageView()
@@ -20,8 +22,8 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypBlack
-        alertPresenter.delegate = self
         setupLayout()
+        test
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -96,7 +98,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                     UIBlockingProgressHUD.dismiss()
                 })
             case .failure(let error):
-                self?.showLoginAlert(error: error)
+                self?.showAlert(with: error)
                 UIBlockingProgressHUD.dismiss()
             }
         }
@@ -105,6 +107,7 @@ extension SplashViewController: AuthViewControllerDelegate {
     private func fetchProfile(completion: @escaping () -> Void) {
         profileService.fetchProfile { [weak self] profileResult in
             guard let self = self else { return }
+            
             switch profileResult {
             case .success(_):
                 guard let username = self.profileService.profile?.username else { return }
@@ -113,17 +116,24 @@ extension SplashViewController: AuthViewControllerDelegate {
                     self.switchToTabBarController()
                 }
             case .failure(let error):
-                self.showLoginAlert(error: error)
+                self.showAlert(with: error)
             }
             
             completion()
         }
     }
     
-    private func showLoginAlert(error: Error) {
-        alertPresenter.showAlert(title: "Упс! Что-то пошло не так :(", message: "Не удалось авторизоваться, \(error.localizedDescription)") {
-            self.performSegue(withIdentifier: self.showAuthenticationScreenSegueIdentifier, sender: nil)
+    private func showAlert(with error: Error) {
+        let alert = UIAlertController(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { _ in
+            self.presentAuth()
         }
+        
+        alert.addAction(action)
+        present(alert, animated: true)
     }
 }
 
