@@ -9,8 +9,6 @@ final class SplashViewController: UIViewController {
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private var wasChecked: Bool = false
     
-    private let test = KeychainWrapper.standard.removeAllKeys()
-    
     private lazy var splashImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -23,7 +21,6 @@ final class SplashViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .ypBlack
         setupLayout()
-        test
     }
     
     override func viewDidAppear(_ animated: Bool) {
