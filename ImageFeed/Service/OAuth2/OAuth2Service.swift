@@ -52,7 +52,7 @@ extension OAuth2Service {
     // TODO: переписать на URLComponents query
     func authTokenRequest(code: String) -> URLRequest? {
         builder.makeHTTPRequest(
-            path: "/oauth/token1"
+            path: "/oauth/token"
             + "?client_id=\(Constants.accessKey)"
             + "&&client_secret=\(Constants.secretKey)"
             + "&&redirect_uri=\(Constants.redirectURI)"

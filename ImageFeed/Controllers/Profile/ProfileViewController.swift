@@ -39,6 +39,8 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.text = "Hello, World!"
         label.textColor = .ypWhite
+        label.numberOfLines = 0
+        label.lineBreakMode = .byCharWrapping
         label.font = UIFont.systemFont(ofSize: 13)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -147,6 +149,7 @@ final class ProfileViewController: UIViewController {
         // description constraints
         constraints.append(descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8))
         constraints.append(descriptionLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor))
+        constraints.append(descriptionLabel.trailingAnchor.constraint(equalTo: logoutButton.trailingAnchor))
             
         // logout button constraints
         constraints.append(logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20))
