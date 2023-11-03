@@ -7,7 +7,7 @@ final class SplashViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     private let authService = OAuth2Service()
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
-    private var wasChecked: Bool = false
+    private var isChecked: Bool = false
     
     private lazy var splashImageView: UIImageView = {
         let imageView = UIImageView()
@@ -43,8 +43,8 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Private methods
     private func checkAuthStatus() {
-        guard !wasChecked else { return }
-        wasChecked = true
+        guard !isChecked else { return }
+        isChecked = true
         if authService.isAuthenticated {
             UIBlockingProgressHUD.show()
             
